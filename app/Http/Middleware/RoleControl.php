@@ -15,8 +15,8 @@ class RoleControl
      
         $user = Auth::user();
 
-        if ($user && $user->role != 'teacher' && $user->role != 'student' ) {
-            return  abort('404');
+        if ($user && $user->role != 'admin' ) {
+            return  redirect()->route('index.task');
             //hata:basic burası Ana sayfaya yonlendirilecek
         } 
 

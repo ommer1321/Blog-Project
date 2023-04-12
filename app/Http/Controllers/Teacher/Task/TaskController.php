@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Teacher\Task;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\TaskFormRequest;
-use App\Models\Teacher\Task;
+use App\Models\Task;
 use App\Traits\TaskTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;

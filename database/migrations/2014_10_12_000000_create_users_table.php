@@ -17,15 +17,10 @@ return new class extends Migration
             $table->id();
             $table->uuid('user_id')->unique();
             $table->string('name');
-            $table->string('surname');
-            $table->string("user_name")->unique()->index(); 
-            $table->string('phone',11)->unique()->nullable();
-            $table->longText('address')->nullable();
-            $table->enum('role',['teacher','student','admin']); 
-            $table->longText('user_detail')->nullable();
-            $table->string('email')->unique()->index();
-            $table->timestamp('email_verified_at')->nullable();
+            $table->enum('role',['user','admin'])->default('admin'); 
+            $table->string('email')->unique();
             $table->string('password');
+            $table->timestamp('email_verified_at')->nullable();
             $table->rememberToken();
             $table->timestamps();
 

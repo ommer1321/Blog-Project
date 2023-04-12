@@ -135,9 +135,8 @@
 
                                 </div>
                             </div>
-
                             <div class="flex-grow-1 mx-2">
-                                <h5 class="font-size-16 mb-1">Not Oluşturun </h5>
+                                <h5 class="font-size-16 mb-1">Blog Akış Sayfası </h5>
                                 <p class="text-muted mb-0">Lorem ipsum dolor sit amet adipiscing elit</p>
                             </div>
 
@@ -148,24 +147,7 @@
 
                     </div>
 
-                    <div class="col-auto ms-sm-auto">
-
-                        <div class="avatar-group justify-content-sm-end">
-
-                            <div class="avatar-group-item">
-                                <a href="javascript: void(0);" data-bs-toggle="modal" data-bs-target="#staticBackdrop"
-                                    class="d-block" data-bs-toggle="tooltip" data-placement="top">
-                                    <div class="avatar">
-                                        <div class="avatar-title rounded-circle bg-light text-primary">
-                                            <i class="mdi mdi-plus fs-5"></i>
-                                        </div>
-                                    </div>
-                                </a>
-                            </div>
-
-
-                        </div><!-- end avatar-group -->
-                    </div>
+            
                     <!--end col-->
                 </div>
                 <!--end row-->
@@ -177,11 +159,11 @@
 
 
 
-        <div class="row mt-4">
+        <div class="row mt-4 d-flex justify-content-center">
             <!-- start col -->
 
             @foreach ($taskList as $task)
-                <div class="col-xl-4 col-sm-6">
+                <div class="col-xl-9 col-sm-9  ">
                     <div class="card border">
                         <div class="card-body">
                             <div class="">
@@ -192,17 +174,8 @@
                                     </a>
                                     <div class="dropdown-menu dropdown-menu-end">
                                         <a class="dropdown-item" href="{{route('details.task',$task->task_id)}}">Göster</a>
-                                        <a  class="dropdown-item" href="{{route('details.task',$task->task_id)}}#edit">Düzenle</a>
-
-                                        <form action="{{ route('delete.task', $task->task_id) }}" name="deleteTask"
-                                            method="post">
-                                            @csrf
-                                            @method('put')
-
-                                            <input type="submit" name="deleteTaskButton" class="dropdown-item"
-                                                value="Sil">
-
-                                        </form>
+                                    
+                            
                                     </div>
                                 </div>
 
@@ -223,14 +196,14 @@
 
                                     <div class="flex-grow-1 overflow-hidden mx-2">
 
-                                        <h5 class="font-size-15 mb-1 text-truncate"><a href="javascript: void(0);"
+                                        <h5 class="font-size-15 mb-1 "><a href="{{route('details.task',$task->task_id)}}"
                                                 class="text-dark">{{ $task->title }} </a></h5>
 
                                         <span
                                             class="badge badge-soft-{{ $task->status_color }} mb-0">{{ $task->status_tr }}</span>
 
 
-                                        <small class="mt-2 text-muted d-block">{{ $task->mini_note }}</small>
+                                        <small class="mt-2 text-muted d-block">{{ $task->note }}</small>
                                     </div>
 
                                 </div>

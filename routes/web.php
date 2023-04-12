@@ -23,24 +23,15 @@ Auth::routes();
 
 
 //Auth Contol
-Route::group(['middleware' => ['auth','isRole']], function () {
+Route::group(['middleware' => ['auth']], function () {
 
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('index.home');
-
-
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('index.home')->middleware('isRole');
 
 
 
 
 
-// Calendar Route
-Route::group(['prefix' => 'calendar'], function () {
-
-Route::get('/', [App\Http\Controllers\Teacher\Calendar\CalendarController::class, 'index'])->name('index.calendar');
-Route::get('/api', [App\Http\Controllers\Teacher\Calendar\CalendarController::class, 'api'])->name('api.calendar');
-
-});
 
 
 
@@ -59,20 +50,19 @@ Route::put('/update/{task_id}', [App\Http\Controllers\Teacher\Task\TaskControlle
 
 
 
+Route::group(['prefix' => 'categories'], function () {
+    Route::get('/', [App\Http\Controllers\Category\CategoryController::class, 'index'])->name('index.category');
+    Route::post('/category-store', [App\Http\Controllers\Category\CategoryController::class, 'categoryStore'])->name('store.category');
+    Route::post('/category-delete/{id}', [App\Http\Controllers\Category\CategoryController::class, 'categoryDelete'])->name('delete.category');
+    Route::post('/category-update/{id}', [App\Http\Controllers\Category\CategoryController::class, 'categoryUpdate'])->name('update.category');
 
 
+    Route::post('/altcategory-store', [App\Http\Controllers\Category\CategoryController::class, 'altcategoryStore'])->name('store.altcategory');
+    Route::post('/altcategory-delete/{id}', [App\Http\Controllers\Category\CategoryController::class, 'altcategoryDelete'])->name('delete.altcategory');
+    Route::post('/altcategory-update/{id}', [App\Http\Controllers\Category\CategoryController::class, 'altcategoryUpdate'])->name('update.altcategory');
 
-
-
-// Grup Route
-Route::group(['prefix' => 'grup'], function () {
-
-    Route::get('/', [App\Http\Controllers\Teacher\Grup\GrupController::class, 'index'])->name('index.grup');
-    Route::get('/create', [App\Http\Controllers\Teacher\Grup\GrupController::class, 'create'])->name('create.grup');
-
+    
 });
-
-
 
 
 

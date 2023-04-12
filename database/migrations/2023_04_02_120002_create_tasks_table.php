@@ -16,12 +16,12 @@ return new class extends Migration
         Schema::create('tasks', function (Blueprint $table) {
             $table->id();
             $table->uuid('task_id')->unique();
-            $table->unsignedBigInteger('teacher_id');
+            $table->unsignedBigInteger('admin_id');
             $table->string('title');
             $table->longText('note');
             $table->date('finished_at')->nullable();
             $table->enum('status',['red','yellow','green']);
-            $table->foreign('teacher_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('admin_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
     }

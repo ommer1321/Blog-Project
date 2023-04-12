@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Traits\TaskTrait;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
-    
+    use TaskTrait;
     public function __construct()
     {
         $this->middleware('auth');
@@ -14,7 +15,7 @@ class HomeController extends Controller
 
 
     public function index()
-    {
-        return view('home.index');
+    {$taskList = $this->listTask();
+        return view('home.index',compact('taskList'));
     }
 }

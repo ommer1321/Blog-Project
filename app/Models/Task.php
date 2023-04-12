@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\Teacher;
+namespace App\Models;
 
 use App\Traits\TaskTrait;
 use Carbon\Carbon;
@@ -20,12 +20,6 @@ class Task extends Model
 
 
 
-// Casts
-
-    protected $casts = [
-        // hata:orta burası çalışmıyor alpaya sor
-        // 'id' => 'uuid',
-    ];
 
     protected static function boot()
     {
