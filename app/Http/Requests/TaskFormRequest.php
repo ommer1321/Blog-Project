@@ -26,7 +26,8 @@ class TaskFormRequest extends FormRequest
         'finished_at' =>'date|nullable|after_or_equal:today',
         'status' =>'in:yellow,red,green',
         'title' => 'required|string|max:75',
-        
+        'category'=> 'nullable',
+        'altcategory'=> 'nullable',
         ];
     }
 }

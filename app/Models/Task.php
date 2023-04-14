@@ -18,7 +18,10 @@ class Task extends Model
 
 
 
-
+    public function categories()
+    {
+        return  $this->belongsTo(TaskAndAltCategory::class, 'task_id', "id");
+    }
 
 
     protected static function boot()

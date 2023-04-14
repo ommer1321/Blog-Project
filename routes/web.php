@@ -2,7 +2,6 @@
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Teacher\Calendar\CalendarController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -40,11 +39,11 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 // Task Route
 Route::group(['prefix' => 'tasks'], function () {
 
-Route::get('/', [App\Http\Controllers\Teacher\Task\TaskController::class, 'index'])->name('index.task');
-Route::get('/{task_id}', [App\Http\Controllers\Teacher\Task\TaskController::class, 'detail'])->name('details.task');
-Route::post('/store', [App\Http\Controllers\Teacher\Task\TaskController::class, 'store'])->name('store.task');
-Route::put('/delete/{task_id}', [App\Http\Controllers\Teacher\Task\TaskController::class, 'delete'])->name('delete.task');
-Route::put('/update/{task_id}', [App\Http\Controllers\Teacher\Task\TaskController::class, 'update'])->name('update.task');
+Route::get('/', [App\Http\Controllers\Task\TaskController::class, 'index'])->name('index.task');
+Route::get('/{task_id}', [App\Http\Controllers\Task\TaskController::class, 'detail'])->name('details.task');
+Route::post('/store', [App\Http\Controllers\Task\TaskController::class, 'store'])->name('store.task');
+Route::put('/delete/{task_id}', [App\Http\Controllers\Task\TaskController::class, 'delete'])->name('delete.task');
+Route::put('/update/{task_id}', [App\Http\Controllers\Task\TaskController::class, 'update'])->name('update.task');
 
 });
 

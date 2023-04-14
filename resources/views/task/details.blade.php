@@ -165,7 +165,6 @@
 
                     {{-- role kontrol --}}
                     @if (auth()->user()->role == 'admin')
-
                         <div class="tab-pane " id="tasks" role="tabpanel">
                             <div class="card mb-0 border-0">
                                 <div class="card-body">
@@ -215,7 +214,7 @@
                                                     class="col-sm-3 col-form-label">Başlık</label>
                                                 <div class="col-sm-9">
                                                     <input type="text" name="title" class="form-control"
-                                                        value="{{ old('title') }}" id="horizontal-firstname-input"
+                                                        value="{{$task->title}}" id="horizontal-firstname-input"
                                                         placeholder="Başlık Giriniz..">
                                                     @error('title')
                                                         <small class="text-danger">{{ $message }}</small>
@@ -229,7 +228,7 @@
                                                     Tarih</label>
                                                 <div class="col-md-9">
                                                     <input class="form-control" name="finished_at" type="date"
-                                                        value="{{ old('finished_at') }}" id="example-date-input">
+                                                        value="{{$task->finished_at}}" id="example-date-input">
                                                     @error('finished_at')
                                                         <small class="text-danger">{{ $message }}</small>
                                                     @enderror
@@ -242,7 +241,7 @@
                                                     class="col-sm-3 col-form-label">Not
                                                     Önemi</label>
                                                 <div class="col-md-9">
-                                                    <select class="form-select" value="{{ old('status') }}"
+                                                    <select class="form-select" value=" {{$task->status}}"
                                                         name="status">
                                                         <option value="red">Kırmızı</option>
                                                         <option value="yellow">Sarı</option>
@@ -263,7 +262,7 @@
                                                     <div class="form-floating">
                                                         {{-- Ck Editör id="ckeditor-classic" --}}
                                                         <textarea class="form-control" name="note" placeholder="Leave a comment here" id="floatingTextarea2"
-                                                            style="height: 100px">{{ old('note') }}</textarea>
+                                                            style="height: 100px">{{$task->note}}</textarea>
 
                                                         @error('note')
                                                             <small class="text-danger">{{ $message }}</small>
@@ -272,8 +271,57 @@
                                                 </div>
                                             </div>
 
+                                            <hr>
+                                            <div class="row mb-4">
+
+                                                <div class="col-md-6">
+                                                    <h5>Kategoriler</h5>
+                                                    <hr>
+                                                    @foreach ($categories as $category)
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" name="category[]" type="checkbox" value="{{$category->id}}"
+                                                                id="formCheck2"
+                                                                @foreach ($taskAndCategories as $taskAndCategory )
+                                                                    @if ($taskAndCategory['category_id'] ==$category->id)
+                                                                     checked   
+                                                                    @endif
+                                                                @endforeach
+                                                                >
+                                                            <label class="form-check-label" for="formCheck2">
+                                                                {{ $category->name }}
+                                                            </label>
+                                                        </div>
+                                                    @endforeach
+                                                </div>
 
 
+                                                <div class="col-md-6">
+                                                    <h5>Alt Kategoriler</h5>
+                                                    <hr>
+                                                    @foreach ($altCategories as $altCategory)
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" name="altcategory[]" type="checkbox" value="{{$altCategory->id}}"
+                                                                id="formCheck2" 
+                                                                @foreach ($taskAndAltCategories as $taskAndAltCategory )
+                                                                @if ($taskAndAltCategory['altcategory_id'] ==$altCategory->id)
+                                                                 checked   
+                                                                @endif
+                                                            @endforeach
+                                                                >
+                                                            <label class="form-check-label" for="formCheck2">
+                                                                @foreach ($categories as $category)@if ($category->id ==$altCategory->category_id)
+                                                               <b> {{$category->name}}<span class="text-danger"> =></span></b>
+                                                                @endif @endforeach    <small class=""> {{ $altCategory->name }}</small>
+                                                            </label>
+                                                        </div>
+                                                    @endforeach
+
+                                                    <b class="text-danger">Dikkat : </b><small class="text-danger"> Bağlı olduğu kategoriyi belirtmek 
+                                                        amacıyla tasarım tarafındaki eksiklikten kaynaklı vakit kaybetmemek
+                                                         için oluşturdum buradaki sayfa içi Kategori eşleştirme forech kısmını </small>
+                                                </div>
+
+                                            </div>
 
 
                                         </div>

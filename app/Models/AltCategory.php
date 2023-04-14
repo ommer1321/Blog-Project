@@ -18,4 +18,10 @@ class AltCategory extends Model
 
         $this->attributes['name']  = Str::title($value);
     }
+
+    // public function category()
+    // {
+    //     return  $this->belongsTo(TaskAndCategory::class, 'category_id', "id");
+    // }
+
 }

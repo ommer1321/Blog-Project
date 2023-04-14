@@ -6,6 +6,8 @@ use App\Http\Requests\TaskFormRequest;
 use App\Models\AltCategory;
 use App\Models\Category;
 use App\Models\Task;
+use App\Models\TaskAndAltCategory;
+use App\Models\TaskAndCategory;
 use Illuminate\Support\Facades\Auth;
 
 trait CategoryTrait
@@ -16,20 +18,20 @@ trait CategoryTrait
         if ($categoryResult) {
 
             return redirect()->route('index.category')->with('success', 'Başarılı Bir Şekilde Tamamlandı');
-        
         } else {
 
             return redirect()->route('index.category')->with('failed', 'Maalesef Başarısız');
-        
         }
     }
 
-   
+
     public function listCategory()
     {
+     
+
         $categories = Category::get();
         $altCategories = AltCategory::get();
-        return (['categories'=>$categories,'altCategories'=>$altCategories ]);
+        return (['categories' => $categories, 'altCategories' => $altCategories]);
     }
 
 
@@ -38,16 +40,14 @@ trait CategoryTrait
         $category = Category::where('id', $category_id)->first();
 
         $deletedcategory = $category->delete();
-        
-        return  $this->redirectToCategory($deletedcategory);
 
-      
+        return  $this->redirectToCategory($deletedcategory);
     }
 
 
     public function storeCategory($validatedData, $category)
     {
-        $category->name =$validatedData['name'];
+        $category->name = $validatedData['name'];
 
         $categoryResult = $category->save();
 
@@ -58,7 +58,7 @@ trait CategoryTrait
     public function updateCategory($validatedData, $category)
     {
         $categoryResult = $category->update([
-            'name'=>$validatedData['name'],
+            'name' => $validatedData['name'],
         ]);
 
         return   $this->redirectToCategory($categoryResult);
@@ -68,8 +68,8 @@ trait CategoryTrait
     public function updateAltCategory($validatedData, $altCategory)
     {
         $altCategoryResult = $altCategory->update([
-            'name'=>$validatedData['name'],
-            'category_id'=>$validatedData['category_id'],
+            'name' => $validatedData['name'],
+            'category_id' => $validatedData['category_id'],
         ]);
 
         return   $this->redirectToCategory($altCategoryResult);
@@ -78,9 +78,9 @@ trait CategoryTrait
 
     public function storeAltCategory($validatedData, $altCategory)
     {
-        $altCategory->name =$validatedData['name'];
+        $altCategory->name = $validatedData['name'];
         $altCategory->category_id = $validatedData['category_id'];
-        
+
         $altCategoryResult = $altCategory->save();
 
         return   $this->redirectToCategory($altCategoryResult);
@@ -94,16 +94,20 @@ trait CategoryTrait
         $altCategory = AltCategory::where('id', $altCategory_id)->first();
 
         $deletedAltCategory = $altCategory->delete();
-        
-        return  $this->redirectToCategory($deletedAltCategory);
 
-      
+        return  $this->redirectToCategory($deletedAltCategory);
+    }
+
+    public function getTaskAndCategories($task_uuid)
+    {
+        $TaskAndCategories = TaskAndCategory::where('task_uuid', $task_uuid)->get();
+        return $TaskAndCategories;
     }
 
 
-
-
-
-
-
+    public function getTaskAndAltCategories($task_uuid)
+    {
+        $TaskAndAltCategories = TaskAndAltCategory::where('task_uuid', $task_uuid)->get();
+        return $TaskAndAltCategories;
+    }
 }

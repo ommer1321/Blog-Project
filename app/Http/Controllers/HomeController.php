@@ -15,7 +15,8 @@ class HomeController extends Controller
 
 
     public function index()
-    {$taskList = $this->listTask();
+    {
+        $taskList = $this->allTask();
         return view('home.index',compact('taskList'));
     }
 }

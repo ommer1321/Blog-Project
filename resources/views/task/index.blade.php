@@ -9,9 +9,6 @@
 
 @section('content')
     <div class="container-fluid">
-
-
-
         {{-- Create Modal --}}
 
         <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
@@ -140,6 +137,14 @@
                                 <p class="text-muted mb-0">Lorem ipsum dolor sit amet adipiscing elit</p>
                             </div>
 
+
+
+
+
+
+
+
+
                         </div>
 
 
@@ -147,35 +152,81 @@
 
                     </div>
 
-            
-                    <!--end col-->
+                    <div class="row g-2 ">
+                        <form action="{{ route('index.task') }}" method="get">
+
+
+
+
+
+
+                            <div class="col-md-3 mx-2 my-2">
+
+                                <label for=""> Kategori </label>
+
+                                <select name="category" id="" class="form-select">
+                                    <option value="">Tüm</option>
+                                    @foreach ($categories as $category)
+                                        <option @if (request()->get('category') == $category->id) selected @endif
+                                            value="{{ $category->id }}">{{ $category->name }}</option>
+                                    @endforeach
+
+                                </select>
+                                <input type="submit" value="Ara" class="btn btn-secondary form-control ">
+                            </div>
+
+
+                        </form>
+
+                        <form action="{{ route('index.task') }}" method="get">
+                            <div class="col-md-3 mx-2 my-2">
+
+                                <label for="">Alt Katagori</label>
+                                <select name="altcategory" id="" class="form-select">
+                                    <option value="">Tüm</option>
+                                    @foreach ($altCategories as $altCategory)
+                                        <option @if (request()->get('altcategory') == $altCategory->id) selected @endif
+                                            value="{{ $altCategory->id }}">{{ $altCategory->name }}</option>
+                                    @endforeach
+
+
+                                </select>
+                                <input type="submit" value="Ara" class="btn btn-secondary form-control ">
+
+                            </div>
+                        </form>
+                    </div>
+
                 </div>
-                <!--end row-->
+                <!--end col-->
             </div>
-            <!--end card-body-->
+            <!--end row-->
         </div>
+        <!--end card-body-->
+    </div>
 
 
 
 
-
-        <div class="row mt-4 d-flex justify-content-center">
-            <!-- start col -->
-
+    <div class="row mt-4 d-flex justify-content-center">
+        <!-- start col -->
+        @if (isset($taskList))
             @foreach ($taskList as $task)
                 <div class="col-xl-9 col-sm-9  ">
                     <div class="card border">
                         <div class="card-body">
                             <div class="">
                                 <div class="dropdown float-end">
-                                    <a class="text-muted dropdown-toggle font-size-16" href="{{route('details.task',$task->task_id)}}" role="button"
+                                    <a class="text-muted dropdown-toggle font-size-16"
+                                        href="{{ route('details.task', $task->task_id) }}" role="button"
                                         data-bs-toggle="dropdown" aria-haspopup="true">
                                         <i class="bx bx-dots-vertical-rounded font-size-20"></i>
                                     </a>
                                     <div class="dropdown-menu dropdown-menu-end">
-                                        <a class="dropdown-item" href="{{route('details.task',$task->task_id)}}">Göster</a>
-                                    
-                            
+                                        <a class="dropdown-item"
+                                            href="{{ route('details.task', $task->task_id) }}">Göster</a>
+
+
                                     </div>
                                 </div>
 
@@ -196,7 +247,8 @@
 
                                     <div class="flex-grow-1 overflow-hidden mx-2">
 
-                                        <h5 class="font-size-15 mb-1 "><a href="{{route('details.task',$task->task_id)}}"
+                                        <h5 class="font-size-15 mb-1 "><a
+                                                href="{{ route('details.task', $task->task_id) }}"
                                                 class="text-dark">{{ $task->title }} </a></h5>
 
                                         <span
@@ -211,23 +263,28 @@
 
 
 
-
-                                <div class="mt-3 pt-1">
-                                    <div class="d-flex justify-content-between">
-                                        <p class="text-muted font-size-13 mb-1">Kalan Süre</p>
-                                        <p class="text-muted font-size-13 mb-1">{{ $task->date_counter }} Gün</p>
-                                    </div>
-                                    <div class="progress animated-progess custom-progress">
-                                        <div class="progress-bar bg-gradient bg-{{ $task->status_color }}"
-                                            role="progressbar" style="width: {{ $task->percent_time }}%"
-                                            aria-valuenow="90" aria-valuemin="0" aria-valuemax="90">
+                                @if ($task->finished_at)
+                                    <div class="mt-3 pt-1">
+                                        <div class="d-flex justify-content-between">
+                                            <p class="text-muted font-size-13 mb-1">Kalan Süre</p>
+                                            <p class="text-muted font-size-13 mb-1">{{ $task->date_counter }} Gün</p>
+                                        </div>
+                                        <div class="progress animated-progess custom-progress">
+                                            <div class="progress-bar bg-gradient bg-{{ $task->status_color }}"
+                                                role="progressbar" style="width: {{ $task->percent_time }}%"
+                                                aria-valuenow="90" aria-valuemin="0" aria-valuemax="90">
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-
+                                @endif
                                 <div class="mt-3">
                                     <p class="mb-0 text-muted"><i class="mdi mdi-clock me-1"></i> Son Tarih:
-                                        {{ $task->finished_at }}</p>
+                                        @if ($task->finished_at)
+                                            <b class="text-{{ $task->status_color }}">{{ $task->finished_at }}</b>
+                                        @else
+                                            <small class="text-{{ $task->status_color }}"><u>Süresiz</u></small>
+                                        @endif
+                                    </p>
 
                                 </div>
                             </div>
@@ -235,9 +292,11 @@
                     </div>
                 </div>
             @endforeach
-            <!-- end col -->
 
-        </div>
+        @endif
+        <!-- end col -->
+
+    </div>
 
     </div>
 @endsection
